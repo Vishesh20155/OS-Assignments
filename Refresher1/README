@@ -1,0 +1,79 @@
+The following are the descriptions of the programs in this file:
+
+For all the C programs, executible file of the programs will be made by running the 'make' command in the appropriate directory. Then you can run any of the files to run program.
+
+
+Q1cpProg.c:
+
+This program is for the second question of the assignment.
+
+After running the 'make' command you can execute the executible file formed by opening the file Q1 or by typing in command ./Q1. You can also compile the code by using the command: gcc Q1.c and then running the executible by the command: ./a.out
+
+In this program, add/create any file in the same directory as this program and then run the program.
+
+While runnning the program will ask for the source file from which the program will read. Make sure you specify the name of the file with extension if any and the file shoud be present in the current directory only. Then it will ask for destination file. If the desitnation file already exists in the current directory, it will copy the data from source to destination or it will create a new file with name specified in the current directory and then paste the contents there.
+
+
+Q1cpProgCommandLineInput.c:
+
+This program is created due to an ambiguity that whether the inputs(source and destination file name) are to be given command line or not. 
+
+To execute this program, run its executible: Q1CommandLine which is created when you would have run the 'make' command. 
+Type in the command to run the file: ./Q1CommandLine source_file_name destination_file_name
+where the source file needs to be added in the current directory
+
+All the other instructions to run this program are same as for above program.
+
+
+Q2.c:
+
+This program is for the 2nd question of the Assignment.
+
+After running the 'make' command you can execute the executible file formed by opening the file Q2 or by typing in command ./Q2. You can also compile the code by using the command: gcc Q2.c and then running the executible by the command: ./a.out
+
+The program will ask for 2 numbers which you can put in integer format within the range specified by in the question. The program will output the binary of the 2 numbers along with their sum in binary format. 
+
+All the computations are performed in a char array i.e. string. 
+
+
+Q3Swap.c:
+
+This program is for the 3rd question of the assignment. 
+
+After running the 'make' command you can execute the executible file formed by opening the file Q3 or by typing in command ./Q3. You can also compile the code by using the command: gcc Q3Swap.c and then running the executible by the command: ./a.out
+
+The program will first ask if you wish to swap two integer variables or two int type arrays:
+
+You need to input 'A' for swapping arrays or 'V' for swapping variables
+
+If you enter 'A':
+	The program will ask for the number of elements in the first array and the corresponding elements which can be entered as space separated
+	Then the program will ask the same information about the second array.
+
+	Then the program will output the arrays before and after swapping
+
+If you enter 'V':
+	The program will ask for the 2 variables 'a' and 'b' and then display their values before and after swapping.
+
+The arrays are swapped element by element so their number of elements can differ. The swapping is done the same way as the 2 variables are swapped but considering the sizes of the 2 arrays, which may differ.
+
+
+Q4StrRev.c:
+
+This program is for the 4th question of the assignment.
+
+After running the 'make' command you can execute the executible file formed by opening the file Q4 or by typing in command ./Q4. You can also compile the code by using the command: gcc Q4StrRev.c and then running the executible by the command: ./a.out
+
+In this program input any string(with or without spaces) and the program will print it by reversing it.
+
+
+Q5BinarySearch.c:
+
+This program is for 5th question of the Assignment.
+
+After running the 'make' command you can execute the executible file formed by opening the file Q5 or by typing in command ./Q5. You can also compile the code by using the command: gcc Q5BinarySearch.c and then running the executible by the command: ./a.out
+
+The program first asks for the number elements int the array and then the elements of the array (either sorted or unsorted).
+Then the program asks for the element you wish to search.
+
+The program outputs the sorted array and the 0-based index in the sorted array by using binary search.

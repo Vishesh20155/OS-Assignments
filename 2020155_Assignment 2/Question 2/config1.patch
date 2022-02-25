@@ -1,0 +1,6 @@
+3c3
+< # Linux/x86 5.14.3 Kernel Configuration
+---
+> # Linux/x86 5.14.4 Kernel Configuration
+1593d1592
+< CONFIG_NET_DSA_TAG_8021Q=m

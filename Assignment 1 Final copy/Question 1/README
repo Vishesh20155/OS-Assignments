@@ -1,0 +1,9 @@
+The csv file needs to be store with the name "student_record.csv" after removing the existing file with the same name.
+
+After that run the "make" command the compilation will be done in phases i.e. first the assembly file with the extension .s will be made. Using that, an object file with extension .o will be made. Then the program is finally compiled and an executible is generated. 
+
+In all 2 .s files, 2 .o files and 2 executibles will be generated which can be run as follows:
+
+The executible Q1Fork will be generated for the first part of the question using fork. Use the ./Q1Fork to get its output
+
+The executible Q1Thread will be generated for the first part of the question using threading. Use the ./Q1Thread to get its output

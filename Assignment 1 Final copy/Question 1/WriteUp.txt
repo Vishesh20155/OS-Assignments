@@ -1,0 +1,54 @@
+FOR PART 1 USING THE FORK() SYSTEM CALL:
+Working of the Program with Fork() - "Ques1.c":
+
+As the program execution begins, a fork is called to split the program into parent and child processes which compute the averages of Section B and Section A respectively.
+
+The .csv file is open and read in the read_from_file() function using the open and read system call.
+	open("student_record.csv", O_RDONLY) - This is how the open syscall is used with the first parameter being the name of the .csv file and the second parameter determines that we are opening the file in read only mode. Error handling is done if the file descriptor stores a negative value using perror and if there is an error, the program terminates.
+
+	For termination exit() syscall is used from stdlib.h header file.
+
+	read(fd, &c, 1) - This is how the read() syscall is used to read the contents of the csv file. First parameter 'fd' determines the file descriptor of the file we have opened and needs to be read. The second parameter is a buffer (reference to a char type variable) in which a character is stored. The length(=1), determined by the third parameter. I have used one as the size of a line was not fixed so the contents were to be stored in a line by line manner in a 2-D character array. So inorder to check for '\n', csv file is read line by line. Again error handling is done if read syscall returns a negative value using perror and the program terminates in case of an error.
+
+	close(fd) - This syscall is used to close the file specified by the file descriptor as the first argument. In case it fails i.e. returns a negative value, error is generated using perror and program terminates using exit.
+
+The calculate_sum() function adds the total of each assingment depending upon the section and also updates the number of students. It uses strtok() and atoi() inbuilt functions to separate using a delimiter and convert a string to integer.
+
+print_ass() function computes the average of each assignment sectionwise and prints it accordingly in both the child and parent processes. write() syscall is used:
+	The first argument 1 specifies that we have to output to the stdout. The second argument is the string we wish to print and the third argument is the no of characters we wish to print.
+	Error is handled using perror if write syscall returns a negative value and the program terminates.
+
+All the three functions are called in both the parent and child processes.
+
+For this fork() syscall is used - 
+	 pid_t p = fork()
+	 When p = 0, then we are in the child process and when p>0, we are in the parent process. If p<0, error is generated using perror and program terminates.
+
+waitpid() syscall is also used to ensure that the parent process waits until the child process terminates.
+	waitpid(p, &status, 0):
+	Whenever waitpid() returns a negative value, an error will be handled using perror and program terminates.
+	In waitpid, the 1st argument is the process id generated while invoking fork(). the status determines a macro which whenever evaluated to nonzero value, determines that the child process has terminated successfully. This means that the code of parent process is executed after the line exit(EXIT_SUCCESS) is executed in the child process.
+
+
+FOR PART 2 USING THREADS:
+"Ques1_Threads.c":
+
+The functions read_from_file() and calculate_sum() do the same task as before and use the same syscalls.
+
+The difference in this code is that we have used are the thread functions that are called to create, join and terminate the threads we have to implement in our program.
+
+pthread_create(&ptid, NULL, A, NULL):
+	This is defined in pthread.h header file.
+	The first argument determines the an integer which stores the id of the thread that gets created. The second argument which is a structure determining the attribute of the thread being created is set to null as we wish to make the thread with default attributes.
+	The third argument is the name of a function of void* type that will be invoked whenever this thread gets created and compiled. The last parameter contains a pointer (void*) to the arguments we wish to pass to function A, which is to be executed during thread execution. Since no arguments need to passed it is set to NULL.
+	If pthread_create() returns 0, then that meaens that there is an error in creating a thread which has been handled using perror. In case of the errro, the main() returns i.e. the program terminates.
+
+pthread_exit(NULL): 
+	This thread function is used to mark the end of execution of the thread and terminates the threaded process. Its parameter is a pointer to an integer which stores the return status of the of the termination of thread stage. In the program pthread_exit() is invoked with the parameter set to null.
+
+pthread_join(ptid, NULL):
+	This function ensures that the main() function does not proceed ahead before the thread with id 'ptid' is terminated using pthread_exit() or by returning from the function called when the thread is created. This is invoked to ensure that zombie processes are not created if main parent thread in concurrent execution is terminated before the thread created in it.
+	Its first parameter is the id of the thread that needs for which the main thread waits for its execution to complete. The second parameter is the pointer to the location that stores the exit status of the thread, in this case set to NULL.
+
+
+This program also computes and prints the average score of each assignment across sections.

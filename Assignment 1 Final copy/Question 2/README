@@ -1,0 +1,5 @@
+STEPS OF COMPILING AND RUNNING THE CODE:
+
+In order to run this program, just go come to this directory of 'Question 2' in terminal and just run the command 'make'. After that, a new binary executible will be made with the name Q2.
+Either you can open the binary file(in case of a GUI environment) or just write the command './Q2' in the terminal in order to run the file.
+It will ask for a single output, the unsigned 64-bit number which you have to enter and then the output will be printed.

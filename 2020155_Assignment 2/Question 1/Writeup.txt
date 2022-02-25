@@ -1,0 +1,16 @@
+There are 2 versions of this question that are submitted. Although both achieve the same functionality, both are different in the fact that in the code in directory Question 1, all the steps are done in an organised way using appropriate sleep() and waitpid commands and the output comes in a very organised way. However in the version in directory Question 1.1, waitpid is not used and all the 4 processes i.e. the 3 child(for S1, SR, ST) and one main process run concurrently and the output is not very clear but is made to show how the processes would run if they have to run parallely. 
+
+In both the directories, there is a Makefile, after running the 'make' command run './mainProg' to get the output. For the one in Question 1.1, execution needs to halted using Ctrl+C. Do not run Ctrl+C in the Question 1 directory, it will terminate by itself.
+
+LOGICAL EXPLANATION:
+
+First of all a fork is done to make one child process that declares and defines the SIGTERM handler using the sigaction struct. The SA_SIGINFO flag is set so that we can pass values to it using the sigval union. The integer is printed using the si_value inside the sigterm handler.
+
+Next another fork is made to start the execution of E1 using execl which is invoked with the argument as binary executible of E1 program and Process ID converted to string using the inbuilt function sprintf.
+In that, first a random number is generated using inline asembly for rdrand and then using sigqueue, it is queued to the SIGTERM handler in S1 using the struct sigval. The SIGTERM signal is invoked using sigqueue.
+The process ID is obtained in the argv array as first element which is converted to int using atoi()
+Then the handler for SIGALRM is defined which is called using setitimer by setting its it_interval.tv_sec to 3 seconds. The first SIGALRM is called after 1 second as it_value.tv_sec is set to 1 second and it_value.tv_sec to 0 microsecond. This happens 5 times as controlled by a while loop. 
+
+After execution of E1, program moves back to Main Program where another fork is done to create a child process. In this child process, again we use execl using arguments as the binary executible and the process ID as string. The control of the child process gets transferred to the ProgE2.c file. In that first we use the sigqueue to invoke the SIGTERM handler in S1 by defining a sigval union.  After that a SIGTERM handler for this E2 program and a SIGALRM handler is registered using sigaction and signal syscalls respectively. 
+As before setitimer is used to invoke the SIGALRM handler twice with an interval of 8 seconds. Inside the SIGALRM handler, we use sigqueue to invoke the SIGTERM handler of ST where we pass the system time as string and it gets printed. Also inside the SIGTERM handler we use 'rdtsc' using inline assembly to get the no. of CPU cycles that have occured since last reset. It is divided by the frequency of the processor found using /proc/cpuinfo in linux terminal which is 1.8 Ghz in my case. This gives roughly the no of seconds that have been lapsed since last reset.
+'rdtsc' stores unsigned long long value in edx:eax registers as the upper 32 bits in edx and lower in eax. They are combined using shift operator and bit operator 'or'.

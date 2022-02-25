@@ -1,0 +1,19 @@
+202a203,220
+> SYSCALL_DEFINE2(kernel_2d_memcpy, float*, x, float*, y)
+> {
+> 	float matrix[3][3];
+> 
+> 	if(copy_from_user(&matrix, x, sizeof(matrix)))
+> 	{
+> 		printk("copy_from_user_error\n");
+> 		return -EFAULT;
+> 	}
+> 
+> 	if(copy_to_user(y, &matrix, sizeof(matrix)))
+> 	{
+> 		printk("copy_to_user_error\n");
+> 		return -EFAULT;
+> 	}
+> 	return 0;
+> }
+> 

@@ -1,0 +1,29 @@
+Explanation of the codes:
+
+The first C file MainandA.c is the the file where the program execution begins. 
+
+The main() function calls the function A(). Inside A, you need to input the unsigned number which is stored inside a long int variable 'x'.
+
+Inside the MainandA.c file we have globally declared an external function functionB() which is defined in the assembly language program. This is the B() as defined in the problem statement. This C file also includes the "functionC.c" file which needs to be invoked from the B().
+
+The A function asks for the input and calls the functionB with the input as the parameter in assembly program.
+
+In the assembly program, we know that the 'rdi' register saves the value of the first argument that is passed and the top of the stack contains the return address of the caller function i.e. A().
+
+We use this knowledge and pop from the stack and push the address of the C function. We do this to ensure that in place of the return address in the stack we have the address of the Function C so that when we return from the function B, the program control is transferred to the function C.
+
+Another task we wish to do is that we wish to write an assembly program in B() so that the argument we passed is printed as a string on stdout from the assembly program itself.
+We accomplish this task as follows:
+    1. We store the value in rdi register in r10 as we have to use the rdi register to involve the syscall write() to print the message that we are inside function B().
+    2. Later on we store the value of r10 in rax register and call the assembly function '_printInt' to print the value stored in rax. 
+    3. In the '_printInt' function, the digits of the number are stored in a memory space which was reserved in the .bss section. We also reserve memorey for digitPosition that is 8 bytes to store the exact index of the digits. First of all ASCII value 10 is stored for the new index. 
+    4. Now rcx register points to the digit memory space and we are storing the values using that reference. We keep on incrementing rcx so that each new digit is stored at the next byte. To get each digit, we use the fact that on performing division operation, the rax register stores the integer component while the rdx stores the remainder, which we actually need to store as ASCII in the digit memory space. 
+    5. In order to convert the remainder and store as ASCII we add 48 to it which is the ASCII value of '0'.
+    6. We continue to divide the value in rax register until it becomes 0. Till then the _loop segment keeps on repeating and adding each of the corresponding ASCII in the digit memory space and rcx, the variable that refers to the digitPosition is incremented each time to store the digit accordingly.
+    7. This way we get an ASCII string of the number in assembly and we print such that its characters are printed in reverse order as they were stored so that we get the output as proper number. All of this is done under the '_print' label that writes to stdout using the write() syscall.
+
+When this '_print' label returns, the instruction line program counter encounters is of the 'ret' and as we had earlier modified the stack so that the return address would be instead of the next line of function A(), function C(). 
+
+Function C is called which is indicated by the output on stdout. We also call the syscall exit so that execution terminates there. 
+
+It is ensured that the program control isnt transferred back to the original function A by the line 14 in the MainandA.c program which is never executed.

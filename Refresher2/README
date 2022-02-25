@@ -1,0 +1,96 @@
+The following are the descriptions of the programs in this file:
+
+For all the C programs, executible file of the programs will be made by running the 'make' command. Then you can run any of the files to run program.
+
+
+Q1DynamicMemAllocation.c:
+
+This is the program for 1st Question of Assignment 2. Both the parts of the question are handled by different functions. 
+Firstly as per part a, the matrix is created with the given dimensions and each cell contains a random number.
+
+Then the program asks for the number of rows and number of columns in each of the row. Then the cells are populated by random numbers as per question and the matrix is printed.
+
+To run this program, after running 'make' command either open the executible file that gets formed or write the command ./Question1
+
+
+Q2aLinkedList.c:
+
+This program is for the 2nd question a. part.
+
+After one has run the 'make' command, you run the program, either by oprning the executible file formed or by using the command ./Q2a or by doing the entire procedure of gcc Q2aLinkedList.c and then ./a.out.
+
+The program presents a menu in which you enter the following numbers:
+
+1 to insert an element in the linked list. 
+	If you choose this option then the program asks for the details of the student such as name, roll no, year of enrollment, program of enrollment. The components such as name cannot be space separated  full name due to the fact that gets does not work properly due to improper passing of character array sa pointers in different functions.
+
+2 to delete an element from the linked list. 
+	If you choose this option, the program will ask for the Roll No. of the student whose record you wish to delete.
+
+3 to print all the records in the linked list.
+
+Q2bDLL.c:
+
+This program is same as the above program, with the only difference being that it is implemented using doubly linked lists. So the implementation and input format is same as the previous one.
+
+
+Q2Stack.c:
+
+This program is used to store the student records as in previous questions in a stack such that only students can be added and removed from the top. Like all stack implementations it also provides an option to view the top element of the stack.
+
+It is a menu driven program as in previous 2 cases.
+Everything is same like the Linked List case except the fact that you can only pop the elements i.e. delete only the top element(on entering 2 as option) and instead of printing the entire linked list, you can print just the top element(on entering 3 as option).
+
+Menu options:
+1 to push an element
+2 to pop an element
+3 to view top element in stack
+any other number to terminate the program
+
+
+Q2Queue.c:
+
+This program has the same functionality of storing the student records in a queue. It is a menu driven program differing from linked lists in a way such that new elements are added to the end of the linked list(i.e. ENQUE) and an element is deleted from the front(i.e. DEQUE). There is another functionality of peek i.e. view the element in the front which is provided in general Queue Data Structure.
+
+Menu Options:
+1 to Enque i.e. insert an element
+2 to Deque i.e. remove first element
+3 to Peek i.e. view the element at front of queue
+any other number to terminate the program
+
+
+
+Q3PointerToFunc.c:
+
+This program is for 3rd Question.
+For this question there is a menu from which you can enter:
+1 to add 2 numbers
+2 to subtract 2 numbers
+3 to multiply 2 numbers
+4 to divide 2 numbers
+5 to find exponentiation of 2 numbers
+
+The program will then ask for the 2 operands and give the result.
+
+
+Q5Sort.c:
+This program is for Question 5
+In this C program, implementation of Bubble Sort and Selection Sort in C is performed.
+
+First, the program will ask the number of elements you wish to enter in the array. Next it will ask for the array elements. Then you will have to choose either 1 or 2 for using bubble sort or selection sort.
+
+To run this program, just double click on the executible file AVL formed after running the 'make' command or use the command ./Q5 (or gcc Q5Sort.c) to compile and run the program(./a.out).
+
+
+
+Q5SortCommandLineInput.c:
+This program is for Question 5
+This program is logically same as above program. The difference is that it takes the input as command line arguments.
+
+To sort the array using bubble sort write the command (after running 'make' command): 
+./Sort_CommandLineInput bubble (list of numbers to be sorted)
+
+To sort the array using selection sort write the command (after running 'make' command): 
+./Sort_CommandLineInput selection (space separated list of numbers to be sorted)
+
+Eg: ./Sort_CommandLineInput selection 5 4 3 2 1
