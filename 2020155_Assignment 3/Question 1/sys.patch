@@ -1,0 +1,29 @@
+795a796,823
+> SYSCALL_DEFINE2(delay_vruntime, pid_t, pid, long, delay)
+> {
+> 	printk(KERN_ALERT "Inside syscall\n");
+> 	
+> 	struct pid *pid_struct = NULL;
+> 	struct task_struct *process;
+> 	
+> 
+> 	if((delay<0) || (pid<0)){
+> 		return -EINVAL;
+> 	}
+> 
+> 	long s_delay_val = delay*1000000;
+> 	
+> 	pid_struct = find_get_pid(pid);
+> 	if(pid_struct==NULL){
+> 		return -ESRCH;
+> 	}
+> 	process = pid_task(pid_struct,PIDTYPE_PID);
+> 	printk(KERN_ALERT "PID: %d with unchanged value: %lld\n",pid,process->se.vruntime);
+> 	process->se.delay = s_delay_val;
+> 	
+> 	printk(KERN_ALERT "Value of vruntime of PID: %d changed to %lld succesfully\n",pid,process->se.vruntime);
+> 	printk(KERN_ALERT "Value of delay of PID: %d changed to %lld succesfully\n",pid,process->se.delay);
+> 
+> 	return 0;
+> }
+> 
