@@ -1,0 +1,78 @@
+202a203,279
+> static int helper(char c){
+> 	printk(KERN_ALERT"helper called\n");
+> 	return 1;
+> }
+> 
+> struct mutex m;
+> 
+> DEFINE_MUTEX(m);
+> 
+> int y = 5;
+> static int head = 0;
+> static int tail = -1;
+> static char q[8];
+> 
+> static char* qu;
+> 
+> static int printQ(void){
+> 	if(tail == -1){
+> 		printk(KERN_INFO"Empty Queue");
+> 		return 1;
+> 	}
+> 	
+> 	printk(KERN_INFO"Queue: \n");
+> 	for(y = head; y<=tail; ++y){
+> 		printk(KERN_INFO"%02X\n", q[y]);
+> 	}
+> 	printk(KERN_INFO"Queue KMALLOC: \n");
+> 	for(y = head; y<=tail; ++y){
+> 		printk(KERN_INFO"%02X\n", qu[y]);
+> 	}
+> 	printk(KERN_INFO"\n");
+> 	return 1;
+> }
+> 
+> static int enque(char ch){
+> 	mutex_lock(&m);
+> 	if(tail == -1)
+> 		qu = kmalloc(8, GFP_KERNEL);
+> 	tail = tail + 1;
+> 	tail = tail % 8;
+> 	q[tail] = ch;
+> 	qu[tail] = ch;
+> 	mutex_unlock(&m);
+> 	return 1;
+> }
+> 
+> static int dequeue(void){
+> 	mutex_lock(&m);
+> 	char ch = q[head];
+> 	head = head+1;
+> 	head = head%8;
+> 	if((tail+1)%8 == head){
+> 		tail = -1;
+> 		head = 0;
+> 		// free(qu);
+> 		qu = NULL;
+> 	}
+> 	mutex_unlock(&m);
+> 	return ch;
+> }
+> 
+> 
+> SYSCALL_DEFINE1(writer, char, ch){
+> 	printk(KERN_INFO"Inside Writer\n");
+> 	int x = enque(ch);
+> 	printQ();
+> 	return 0;
+> }
+> 
+> SYSCALL_DEFINE1(reader, char, x){
+> 	printk(KERN_INFO"Inside Reader\n");
+> 	char ch = dequeue();
+> 	copy_to_user(&x, &ch, 1);
+> 	printQ();
+> 	return ch;
+> }
+> 
